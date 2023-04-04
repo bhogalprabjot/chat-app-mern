@@ -1,0 +1,94 @@
+.login {
+    background-color: #F0F2F5;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login__container {
+    width: 60%;
+    height: 75%;
+    display: flex;
+}
+
+.login__title--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin-bottom: 10em;
+    width: 50%;
+    padding-right: 10%;
+}
+
+.login__title--container>h1 {
+    font-size: 48px;
+}
+
+.login__title--container>p {
+    font-size: 24px;
+}
+
+.login__form--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin-bottom: 4em;
+    width: 40%;
+
+}
+
+.login__form--card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    margin-bottom: 4em;
+    width: 96%;
+    padding: 2%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login__form > input
+ {
+    margin: 5px;
+    height: 3em;
+    font-size: 16px;
+    padding-left: 10px;
+}
+.login__form > button{
+    height: 3em;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.login__form--card > a {
+    text-align: center;
+    height: 3em;
+    margin-top: 1em;
+
+}
+
+.login__form--card>button {
+    padding-left: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    height: 3em;
+    margin: 5px;
+    cursor: pointer;
+
+}

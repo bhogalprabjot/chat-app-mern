@@ -1,0 +1,94 @@
+.signup {
+    background-color: rgba(0, 0, 0, 0.40);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* either you can fix it with fixed position or with absolute position */
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    /* position: fixed;
+    top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+}
+
+.signup__container {
+    width: 30vw;
+    /* height: 50vh; */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+
+}
+
+.signup__title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+}
+
+.signup__title>h2 {
+    font-size: 32px;
+}
+
+.signup__inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup__inputs--name {
+    display: flex;
+}
+
+.signup__inputs--name>input {
+    margin: 5px;
+    width: 100%;
+    height: 2em;
+    font-size: 16px;
+    padding-left: 0.5em;
+
+}
+
+.signup__inputs>input {
+    margin: 5px;
+    height: 2em;
+    font-size: 16px;
+    padding-left: 0.5em;
+}
+
+.signup__upload {
+    width: 100%;
+    padding-left: 0.5em;
+
+}
+
+.signup__upload>input {
+    margin-top: 1em;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup__button {
+    margin-top: 2em;
+    width: 40%;
+    height: 3em;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+}
