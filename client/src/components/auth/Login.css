@@ -61,14 +61,14 @@
     justify-content: center;
 }
 
-.login__form > input
- {
+.login__form>input {
     margin: 5px;
     height: 3em;
     font-size: 16px;
     padding-left: 10px;
 }
-.login__form > button{
+
+.login__form>button {
     height: 3em;
     margin: 5px;
     font-size: 16px;
@@ -76,7 +76,7 @@
     cursor: pointer;
 }
 
-.login__form--card > a {
+.login__form--card>a {
     text-align: center;
     height: 3em;
     margin-top: 1em;
@@ -91,4 +91,30 @@
     margin: 5px;
     cursor: pointer;
 
+}
+
+.login__inputs--password {
+    width: 100%;
+    position: relative;
+    margin: 5px;
+}
+
+.login__inputs--password>input {
+    width: 93%;
+    height: 3em;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.login__inputs--password>button {
+    margin-left: 5px;
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    transform: translateY(-50%);
+    padding: 0.4em;
+    font-size: 16px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
 }

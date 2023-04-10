@@ -1,0 +1,27 @@
+.notification-toast {
+    width: 25%;
+    height: 10%;
+    background-color: aqua;
+    display: flex;
+    flex-direction: row-reverse;
+
+}
+
+.notification-toast__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: end;
+    padding: 0.3em;
+}
+
+.notification-toast__header>button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}
+
+.notification-toast__body {
+    flex: 1;
+    padding: 0.3em;
+    font-size: 16px;
+}
