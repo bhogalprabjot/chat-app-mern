@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const signup = async (req, res) => {
     const { firstName, lastName, email, password, profilePicture } = req.body;
+    // console.log({ firstName, lastName, email, password, profilePicture })
     try {
         // check for existing user
         const existingUser = await User.findOne({ email });
@@ -23,6 +24,7 @@ const signup = async (req, res) => {
                 profilePicture
             }
         );
+        // console.log(user);
 
         if (user) {
             return res.status(201).json({
@@ -69,5 +71,20 @@ const signin = async (req, res) => {
     }
 
 }
+const getAllUsers = async (req, res) => {
+    const keyword = req.query.search ? {
+        $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
 
-module.exports = { signup, signin };
+        ],
+    } : {};
+    console.log(keyword['$or'][0]);
+    const users = await User.find(keyword)
+    console.log(users);
+
+    // .where({ _id: { $ne: req.user._id } });
+    res.send(users);
+}
+
+module.exports = { signup, signin, getAllUsers };

@@ -114,6 +114,7 @@ const SignUp = (props) => {
         progress: undefined,
         theme: "light",
       })
+      return;
     }
 
     try {
@@ -124,7 +125,8 @@ const SignUp = (props) => {
       };
       const { data } = await axios.post("/user/signup",
         {
-          name: `${firstName} ${lastName}`,
+          firstName,
+          lastName,
           email,
           password,
           profilePicture
