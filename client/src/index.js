@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 
 import { BrowserRouter } from "react-router-dom";
-
+import ChatProvider from './context/ChatProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
+  // 2. Take your created context and wrap the context provider around your component tree.
   <BrowserRouter>
-    <App />
+    <ChatProvider>
+      <App />
+    </ChatProvider>
   </BrowserRouter>
 
 );
