@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import "./OptionsDrawer.css";
 import { ChatState } from "../../context/ChatProvider";
+import { useHistory } from 'react-router-dom';
 
 
 const OptionsDrawer = (props) => {
 
   const { user } = ChatState();
   const { optionsClass, closeDrawer } = props;
-
+  const history = useHistory();
 
   console.log(user);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    history.push("/");
+  }
+
+
 
   return (
     <div className={`optionsDrawer__container ${optionsClass}`}>
@@ -24,7 +32,7 @@ const OptionsDrawer = (props) => {
           <p>{user?.email}</p>
         </div>
       </div>
-      
+
       {/* options */}
       <div className='optionsDrawer__options--list'>
         <div className='optionsDrawer__options--item'>
@@ -36,7 +44,7 @@ const OptionsDrawer = (props) => {
         <div className='optionsDrawer__options--item'>
           <span>Night Mode</span>
         </div>
-        <div className='optionsDrawer__options--item'>
+        <div className='optionsDrawer__options--item' onClick={logoutHandler}> 
           <span>Logout</span>
         </div>
       </div>
