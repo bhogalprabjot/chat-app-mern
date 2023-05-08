@@ -10,7 +10,7 @@ const OptionsDrawer = (props) => {
   const { optionsClass, closeDrawer } = props;
   const history = useHistory();
 
-  console.log(user);
+  // console.log(user);
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");

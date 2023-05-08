@@ -48,6 +48,7 @@ const accessChat = async (req, res) => {
     }
 }
 
+// fetches all chats of the specific user
 const fetchChats = async (req, res) => {
     try {
         let chats = await Chat.find({
@@ -73,7 +74,7 @@ const fetchChats = async (req, res) => {
     }
 }
 
-
+// creates group chat
 const createGroupChat = async (req, res) => {
 
     if (!req.body.users || !req.body.name) {

@@ -9,7 +9,7 @@ function App() {
   const history = useHistory();
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    console.log("APP", userInfo);
+    // console.log("APP", userInfo);
     if (!userInfo) {
       history.push("/");
     }

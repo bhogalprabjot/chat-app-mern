@@ -1,0 +1,23 @@
+.userCard__container {
+    width: 92%;
+    border-radius: 10px;
+    height: 30%;
+    margin-bottom: 2%;
+    /* border: 1px solid black; */
+    display: flex;
+    padding: 2%;
+    background-color: white;
+
+}
+
+.userCard__profilePicture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 2%;
+}
+
+.userCard__details {
+    width: 100%;
+    margin-left: 2%;
+}
