@@ -32,14 +32,14 @@ const ChatPage = () => {
     setOptionsClass("optionsDrawer__container--close");
   }
 
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
-    // console.log("ChatPage", userInfo);
-    if (!userInfo) {
-      history.push("/");
-    }
-  }, [history])
+  // useEffect(() => {
+  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //   setUser(userInfo);
+  //   console.log("ChatPage", userInfo);
+  //   if (!userInfo) {
+  //     history.push("/");
+  //   }
+  // }, [history])
 
   const handleSearch = async () => {
 
@@ -118,7 +118,7 @@ const ChatPage = () => {
         <OptionsDrawer optionsClass={optionsClass} closeDrawer={closeDrawer} />
 
         {/* Chat List component */}
-        <ChatList loading={loading} setLoading={setLoading} searchResult={searchResult} />
+        <ChatList loading={loading} setLoading={setLoading} searchResult={searchResult} setSearchResult={setSearchResult} />
 
       </div>
 

@@ -1,6 +1,6 @@
 .chatList__container {
     width: 100%;
-    height: 92%;
+    height: 90%;
     background-color: rgb(235, 230, 230);
 
 
@@ -15,6 +15,12 @@
 
 }
 .chatList__searchResult--container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.chatList__chats--container{
     display: flex;
     flex-direction: column;
     justify-content: center;

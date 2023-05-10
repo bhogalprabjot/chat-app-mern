@@ -51,6 +51,7 @@ const accessChat = async (req, res) => {
 // fetches all chats of the specific user
 const fetchChats = async (req, res) => {
     try {
+        // console.log(req.user);
         let chats = await Chat.find({
             users: {
                 $elemMatch: { $eq: req.user._id }
