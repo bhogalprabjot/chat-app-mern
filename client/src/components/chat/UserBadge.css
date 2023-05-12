@@ -1,0 +1,18 @@
+.userBadge{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 30%;
+    background-color: rgb(66, 216, 236);
+    border-radius: 8px;
+    margin: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 3%;
+    padding-right: 1%;
+
+
+}
+.userBadge__title{
+    font-size: 1em;
+}

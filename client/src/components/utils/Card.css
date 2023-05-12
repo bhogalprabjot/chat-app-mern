@@ -1,7 +1,7 @@
 .card__container--selected, .card__container {
     width: 92%;
     border-radius: 10px;
-    height: 30%;
+    /* height: 30%; */
     margin-bottom: 2%;
     /* border: 1px solid black; */
     display: flex;

@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 const OptionsDrawer = (props) => {
 
   const { user } = ChatState();
-  const { optionsClass, closeDrawer } = props;
+  const { optionsClass, closeDrawer,openGroupModal } = props;
   const history = useHistory();
 
   // console.log(user);
@@ -35,7 +35,7 @@ const OptionsDrawer = (props) => {
 
       {/* options */}
       <div className='optionsDrawer__options--list'>
-        <div className='optionsDrawer__options--item'>
+        <div className='optionsDrawer__options--item' onClick={openGroupModal}>
           <span>New Group</span>
         </div>
         <div className='optionsDrawer__options--item'>

@@ -15,6 +15,22 @@ const ChatList = (props) => {
   const { user, setUser, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const history = useHistory();
 
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(userInfo);
+    // console.log("ChatList", userInfo);
+    if (!userInfo) {
+      history.push("/");
+    }
+
+
+    fetchAllChats(userInfo)
+
+    console.log(chats);
+
+  }, [history])
+
   const fetchAllChats = async (user) => {
     // console.log("fetchAllChats", user);
     setChatLoading(true);
@@ -48,21 +64,40 @@ const ChatList = (props) => {
     }
   }
 
+  const accessChat = async (userId) => {
+    try {
+      setChatLoading(true);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+      const { data } = await axios.post('/chat', { userId }, config);
+      if (!chats.find((chat) => chat._id === data._id))
+        setChats([data, ...chats]);
+      setSelectedChat(data);
+      setChatLoading(false);
+      setSearchResult(null);
 
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
-    // console.log("ChatList", userInfo);
-    if (!userInfo) {
-      history.push("/");
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to access chat", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
     }
-
-
-    fetchAllChats(userInfo)
-
-    console.log(chats);
-
-  }, [history])
+  }
+  const selectChat = (chat) => {
+    setSelectedChat(chat);
+  }
 
 
   return (
@@ -87,15 +122,11 @@ const ChatList = (props) => {
                         const { _id, name, email, profilePicture } = user;
                         return (
                           <Card
-                            id={_id}
-                            key={user._id}
-                            isUserCard={true}
+                            key={_id}
                             title={name}
                             subtitle={email}
                             profilePicture={profilePicture}
-                            setChatLoading={setChatLoading}
-                            obj={user}
-                            setSearchResult={setSearchResult}
+                            clickController={() => accessChat(_id)}
                           />
                         );
                       })
@@ -122,12 +153,10 @@ const ChatList = (props) => {
                         return (
                           <Card
                             key={chat._id}
-                            isUserCard={false}
                             title={sender.name}
                             profilePicture={sender.profilePicture}
-                            setChatLoading={setChatLoading}
-                            obj={chat}
-                            setSearchResult={setSearchResult}
+                            clickController={() => selectChat(chat)}
+                            isSelected={selectedChat === chat}
                           />
                         );
 

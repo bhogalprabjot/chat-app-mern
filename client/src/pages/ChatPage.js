@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import GroupModal from '../components/chat/GroupModal';
 
 
 const ChatPage = () => {
@@ -22,8 +23,13 @@ const ChatPage = () => {
   const [chats, setChats] = useState([]);
   const [optionsClass, setOptionsClass] = useState("optionsDrawer__container--close");
   const [searchResult, setSearchResult] = useState(null);
+  const [showGroupModal, setShowGroupModal] = useState(false);
 
-
+  const closeGroupModal = () => setShowGroupModal(false);
+  const openGroupModal = () => {
+    setShowGroupModal(true);
+    setOptionsClass("optionsDrawer__container--close");
+  }
 
   const openDrawer = () => {
     setOptionsClass("optionsDrawer__container--open")
@@ -103,6 +109,11 @@ const ChatPage = () => {
 
     <div className='chatPage__layout--container'>
       <ToastContainer />
+      {
+        showGroupModal &&
+        <GroupModal closeGroupModal={closeGroupModal} setShowGroupModal={setShowGroupModal} />
+      }
+
       <div className='chatPage__left--container'>
 
 
@@ -115,7 +126,8 @@ const ChatPage = () => {
 
 
         {/* <OptionsDrawer /> */}
-        <OptionsDrawer optionsClass={optionsClass} closeDrawer={closeDrawer} />
+        <OptionsDrawer optionsClass={optionsClass} closeDrawer={closeDrawer} openGroupModal={openGroupModal} />
+
 
         {/* Chat List component */}
         <ChatList loading={loading} setLoading={setLoading} searchResult={searchResult} setSearchResult={setSearchResult} />
