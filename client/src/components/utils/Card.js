@@ -13,10 +13,10 @@ const Card = (props) => {
         <div className={containerClass} onClick={clickController}>
             <img className="card__profilePicture" src={profilePicture} />
             <div className="card__details">
-                <div className="card__name">
+                <div className="card__title">
                     {title}
                 </div>
-                <div className="card__email">
+                <div className="card__subtitle">
                     {subtitle}
                 </div>
             </div>

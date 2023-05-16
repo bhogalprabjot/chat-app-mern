@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { getSender } from '../../config/ChatLogic';
 
 const ChatList = (props) => {
-  const { loading, setLoading, searchResult, setSearchResult } = props;
+  const { loading, setLoading, searchResult, setSearchResult, fetchAgain } = props;
   const [chatloading, setChatLoading] = useState(true);
   const { user, setUser, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const history = useHistory();
@@ -29,7 +29,7 @@ const ChatList = (props) => {
 
     console.log(chats);
 
-  }, [history])
+  }, [history, fetchAgain])
 
   const fetchAllChats = async (user) => {
     // console.log("fetchAllChats", user);

@@ -1,5 +1,5 @@
 .signup {
-    background-color: rgba(0, 0, 0, 0.40);
+    background-color: rgba(112, 110, 110, 0.4);
     width: 100%;
     height: 100%;
     display: flex;
@@ -19,16 +19,17 @@
 }
 
 .signup__container {
-    width: 30vw;
+    width: 30%;
     /* height: 50vh; */
-    background-color: white;
+    background-color: var(--color-background);
+    color: var(--color-text);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1em;
     border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10); */
 
 }
 
@@ -61,9 +62,13 @@
     height: 2em;
     font-size: 16px;
     padding-left: 0.5em;
+    background-color: var(--color-backgroundLight);
+    border: none;
+    color: var(--color-text);
 
 }
-.signup__inputs--password{
+
+.signup__inputs--password {
     width: 100%;
     margin: 5px;
     position: relative;
@@ -75,17 +80,22 @@
     height: 2em;
     padding-left: 0.5em;
     font-size: 16px;
+    background-color: var(--color-backgroundLight);
+    border: none;
+    color: var(--color-text);
 }
-.signup__inputs--password>button{
+
+.signup__inputs--password>button {
     position: absolute;
     top: 50%;
-    right: 13px;
+    right: 12px;
     transform: translateY(-50%);
     margin-left: 10px;
-    padding: 0.4em;
-    font-size: 16px;
+    /* padding: 0.4em; */
+    font-size: 1.2em;
+    background-color: var(--color-backgroundLight);
+    color: var(--color-text);
     border: none;
-    background-color: white;
     cursor: pointer;
 }
 
@@ -94,11 +104,15 @@
     height: 2em;
     font-size: 16px;
     padding-left: 0.5em;
+    background-color: var(--color-backgroundLight);
+    border: none;
+    color: var(--color-text);
 }
 
 .signup__upload {
     width: 100%;
     padding-left: 0.5em;
+
 
 }
 
@@ -106,6 +120,15 @@
     margin-top: 1em;
     font-size: 16px;
     cursor: pointer;
+}
+
+::-webkit-file-upload-button {
+    background-color: var(--color-accent);
+    border: none;
+    color: var(--color-text);
+    padding: 2%;
+    border-radius: 7px;
+    margin-right: 2%;
 }
 
 .signup__button {
@@ -116,4 +139,25 @@
     font-weight: 700;
     border-radius: 10px;
     cursor: pointer;
+    background-color: var(--color-accent);
+    border: none;
+    color: var(--color-text);
+}
+
+
+@media screen and (max-width: 950px) {
+    .signup__container {
+        width: 50%;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    .signup__container {
+        width: 70%;
+    }
+
+    .signup__inputs--password {
+        width: 97%;
+    }
 }

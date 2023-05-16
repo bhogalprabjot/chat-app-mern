@@ -6,6 +6,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
 const Login = (props) => {
     const showModal = () => props.setShowSignUpModal(true);
     const [email, setEmail] = useState();
@@ -99,10 +101,12 @@ const Login = (props) => {
                 <div className='login__form--container'>
                     <div className='login__form--card'>
                         <form className='login__form' onSubmit={handleSubmit}>
-                            <input type='email' name='email' placeholder='Email address' value={email} onChange={handleChange}  required />
+                            <input type='email' name='email' placeholder='Email address' value={email} onChange={handleChange} required />
                             <div className='login__inputs--password'>
                                 <input type={showPassword ? 'text' : 'password'} name='password' placeholder='Password' onChange={handleChange} value={password} required />
-                                <button type='button' onClick={toggleShowPassword}>{showPassword ? 'Hide' : 'Show'}</button>
+                                <div className='login__inputs--showPassword'  onClick={toggleShowPassword}>{showPassword ?
+                                    <AiFillEyeInvisible /> : <AiFillEye />
+                                }</div>
                             </div>
                             <button>Log in</button>
                             <button type='button' onClick={getGuestCredentials}>Guest Login</button>

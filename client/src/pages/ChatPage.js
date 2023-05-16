@@ -14,7 +14,7 @@ import GroupModal from '../components/chat/GroupModal';
 
 const ChatPage = () => {
   // 4. Read that value within any component by using the context consumer.
-  const { user, setUser } = ChatState();
+  const { user, setUser, selectedChat } = ChatState();
   const history = useHistory();
 
 
@@ -24,6 +24,7 @@ const ChatPage = () => {
   const [optionsClass, setOptionsClass] = useState("optionsDrawer__container--close");
   const [searchResult, setSearchResult] = useState(null);
   const [showGroupModal, setShowGroupModal] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState(false);
 
   const closeGroupModal = () => setShowGroupModal(false);
   const openGroupModal = () => {
@@ -47,8 +48,11 @@ const ChatPage = () => {
   //   }
   // }, [history])
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
 
+    if (event.key !== 'Enter')
+      return;
+      
     console.log("Search", search);
 
     if (!search) {
@@ -114,29 +118,38 @@ const ChatPage = () => {
         <GroupModal closeGroupModal={closeGroupModal} setShowGroupModal={setShowGroupModal} />
       }
 
-      <div className='chatPage__left--container'>
+      <div className={selectedChat?'chatPage__left--hidden':'chatPage__left--container'}>
+
 
 
         {/* fixed top bar with hamburger icon and search box */}
         <div className='chatPage__nav--container'>
+          {/* <OptionsDrawer /> */}
+          <OptionsDrawer optionsClass={optionsClass} closeDrawer={closeDrawer} openGroupModal={openGroupModal} />
           <MdMenu className='chatPage__nav--hamburger' onClick={openDrawer} />
-          <input type='text' id='searchBox' className='chatPage__nav--searchBox' placeholder='Search User' value={search} onChange={handleChange} />
-          <button className='chatPage__nav--searchBox-button' onClick={handleSearch}>Go</button>
+          <input
+            type='text'
+            id='searchBox'
+            className='chatPage__nav--searchBox'
+            placeholder='Search User'
+            value={search}
+            onChange={handleChange}
+            onKeyDown={handleSearch}
+          />
+          {/* <button className='chatPage__nav--searchBox-button' onClick={handleSearch}>Go</button> */}
         </div>
 
 
-        {/* <OptionsDrawer /> */}
-        <OptionsDrawer optionsClass={optionsClass} closeDrawer={closeDrawer} openGroupModal={openGroupModal} />
 
 
         {/* Chat List component */}
-        <ChatList loading={loading} setLoading={setLoading} searchResult={searchResult} setSearchResult={setSearchResult} />
+        <ChatList loading={loading} setLoading={setLoading} searchResult={searchResult} setSearchResult={setSearchResult} fetchAgain={fetchAgain} />
 
       </div>
 
-      <div className='chatPage__right--container'>
+      <div className={!selectedChat?'chatPage__right--hidden':'chatPage__right--container'}>
         {/* ChatBox component */}
-        <ChatBox />
+        <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
       </div>
 
     </div>

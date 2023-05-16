@@ -38,12 +38,12 @@ const OptionsDrawer = (props) => {
         <div className='optionsDrawer__options--item' onClick={openGroupModal}>
           <span>New Group</span>
         </div>
-        <div className='optionsDrawer__options--item'>
+        {/* <div className='optionsDrawer__options--item'>
           <span>Saved Messages</span>
         </div>
         <div className='optionsDrawer__options--item'>
           <span>Night Mode</span>
-        </div>
+        </div> */}
         <div className='optionsDrawer__options--item' onClick={logoutHandler}> 
           <span>Logout</span>
         </div>

@@ -8,6 +8,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
+
 const SignUp = (props) => {
 
   const { closeSignUpModal } = props;
@@ -186,14 +189,15 @@ const SignUp = (props) => {
 
             <div className='signup__inputs--password'>
               <input type={showPassword ? 'text' : 'password'} name='newPassword' onChange={handleChange} placeholder='New Password' required />
-              <button type='button' onClick={toggleShowPassword}>{showPassword ? 'Hide' : 'Show'}</button>
+              <button type='button' onClick={toggleShowPassword}>{showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}</button>
             </div>
             <div className='signup__inputs--password'>
               <input type={showPassword ? 'text' : 'password'} name='confirmPassword' onChange={handleChange} placeholder='Confirm Password' required />
-              <button type='button' onClick={toggleShowPassword}>{showPassword ? 'Hide' : 'Show'}</button>
+              <button type='button' onClick={toggleShowPassword}>{showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}</button>
             </div>
           </div>
           <div className='signup__upload'>
+            {/* <label className='signup__upload--button'  for="myFile" >Select File</label> */}
             <input type="file" accept='image/' id="myFile" name="profilePicture" onChange={handleChange} />
           </div>
 
