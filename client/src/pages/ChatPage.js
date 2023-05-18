@@ -52,7 +52,7 @@ const ChatPage = () => {
 
     if (event.key !== 'Enter')
       return;
-      
+
     console.log("Search", search);
 
     if (!search) {
@@ -115,10 +115,14 @@ const ChatPage = () => {
       <ToastContainer />
       {
         showGroupModal &&
-        <GroupModal closeGroupModal={closeGroupModal} setShowGroupModal={setShowGroupModal} />
+        <GroupModal
+          closeGroupModal={closeGroupModal}
+          setShowGroupModal={setShowGroupModal}
+          isUpdateModal={false}
+        />
       }
 
-      <div className={selectedChat?'chatPage__left--hidden':'chatPage__left--container'}>
+      <div className={selectedChat ? 'chatPage__left--hidden' : 'chatPage__left--container'}>
 
 
 
@@ -147,7 +151,7 @@ const ChatPage = () => {
 
       </div>
 
-      <div className={!selectedChat?'chatPage__right--hidden':'chatPage__right--container'}>
+      <div className={!selectedChat ? 'chatPage__right--hidden' : 'chatPage__right--container'}>
         {/* ChatBox component */}
         <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
       </div>

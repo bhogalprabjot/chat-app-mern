@@ -76,7 +76,7 @@
 }
 
 .groupModal__selectedUsers {
-    width: 86%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -99,7 +99,7 @@
 .groupModal__footer {
     width: 82%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 1rem;
     /* padding-right: 18%; */

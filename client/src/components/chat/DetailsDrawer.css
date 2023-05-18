@@ -30,11 +30,13 @@
     /* display: flex;
     flex-direction: column; */
 }
-.detailsDrawer__header{
+
+.detailsDrawer__header {
     padding-top: 5%;
     padding-left: 5%;
     padding-bottom: 5%;
 }
+
 .closebtn {
     font-size: 36px;
     background-color: transparent;
@@ -55,22 +57,85 @@
 }
 
 .detailsDrawer__userIcon {
-    width: 100px;
-    height: 100px;
+    width: 12em;
+    height: 12em;
     border-radius: 50%;
-}   
+}
 
-.detialsDrawer__username{
+.detialsDrawer__username {
     margin-top: 8%;
     font-size: 1.2em;
     color: var(--color-text);
 }
 
-.detialsDrawer__email-totalUsers{
+.detialsDrawer__email-totalUsers {
     text-align: center;
     color: var(--color-subtext);
 
 }
+
+
+.detailsDrawer__groupDetails-header {
+    display: flex;
+    padding-left: 4%;
+    padding-right: 2%;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5%;
+
+}
+
+.detialsDrawer__details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.detialsDrawer__username {
+    width: 100%;
+    text-align: center;
+}
+
+.detialsDrawer__edit-groupName {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.detialsDrawer__edit-groupName>input{
+    background-color: var(--color-backgroundLight);
+    border: none;
+    border-radius: 10px;
+    padding: 2%;
+    
+    font-size: 1.2em;
+    color: var(--color-subtext);
+    width: 50%;
+}
+.detialsDrawer__edit-buttons{
+    font-size: 1.5em;
+    margin-left: 2%;
+}
+
+.detialsDrawer__groupName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detialsDrawer__groupName--edit-button {
+    font-size: 1.7em;
+    margin-left: 4%;
+}
+
+.detailsDrawer__groupDetails-add {
+    font-size: 1.8em;
+}
+
+
 
 @media screen and (max-width: 950px) {
     .detailsDrawer--open {

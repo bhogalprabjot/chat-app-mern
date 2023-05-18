@@ -28,7 +28,7 @@
     width: 97%;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     padding-left: 3%;
     padding-top: 2%;
     padding-bottom: 2%;

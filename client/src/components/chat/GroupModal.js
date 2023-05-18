@@ -11,7 +11,7 @@ import UserBadge from "./UserBadge";
 
 
 const GroupModal = (props) => {
-    const { closeGroupModal, setShowGroupModal } = props;
+    const { closeGroupModal, setShowGroupModal, isUpdateModal, selectedChat } = props;
 
     const [groupChatName, setGroupChatName] = useState();
     const [search, setSearch] = useState("");
@@ -143,11 +143,30 @@ const GroupModal = (props) => {
             <div className="groupModal">
                 <div className="groupModal__container">
                     <div className="groupModal__header">
-                        <h2>Create Group Chat</h2>
+                        {isUpdateModal ?
+                            <h2>Update Group</h2>
+                            :
+                            <h2>Create Group Chat</h2>
+                        }
                         <MdClose size={'2em'} cursor={'pointer'} onClick={closeGroupModal} />
                     </div>
                     <div className="groupModal__bodyContainer">
-                        <input name="chatName" type="text" placeholder="Chat Name" onChange={(event) => setGroupChatName(event.target.value)} />
+
+                        {
+                            isUpdateModal ?
+                                <div className="groupModal__selectedUsers">
+                                    {
+                                        selectedChat.users.map((user) => {
+                                            return (
+                                                <UserBadge key={user._id} name={user.name} closeController={() => handleDelete(user)} />
+                                            )
+
+                                        })
+                                    }
+                                </div>
+                                :
+                                <input name="chatName" type="text" placeholder="Chat Name" onChange={(event) => setGroupChatName(event.target.value)} />
+                        }
                         <input name="search" type="text" placeholder="Search user by name or email" onChange={handleSearch} />
                         <div className="groupModal__selectedUsers">
                             {
