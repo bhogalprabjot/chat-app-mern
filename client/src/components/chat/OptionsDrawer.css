@@ -5,7 +5,7 @@
 }
 
 .optionsDrawer__container--open {
-    width: 18%;
+    width: 25%;
 }
 
 .optionsDrawer__container {
@@ -27,7 +27,7 @@
     /* Disable horizontal scroll */
     padding-top: 60px;
     /* Place content 60px from the top */
-    transition: 0.5s;
+    transition: 0.2s;
     /* 0.5 second transition effect to slide in the sidenav */
 
     display: flex;
@@ -104,7 +104,7 @@
 
 @media screen and (max-width: 950px) {
     .optionsDrawer__container--open {
-        width: 30%;
+        width: 35%;
     }
 }
 @media screen and (max-width: 500px) {
