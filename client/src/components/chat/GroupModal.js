@@ -1,26 +1,36 @@
 import "./GroupModal.css";
 import CustomModal from "../modal/CustomModal";
 import { MdClose } from 'react-icons/md';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { ChatState } from "../../context/ChatProvider";
 import Card from '../utils/Card';
 import UserBadge from "./UserBadge";
+import { getSender } from "../../config/ChatLogic";
 
 
 const GroupModal = (props) => {
-    const { closeGroupModal, setShowGroupModal, isUpdateModal, selectedChat } = props;
+    const { closeGroupModal, setShowGroupModal, isUpdateModal, fetchAgain, setFetchAgain } = props;
 
     const [groupChatName, setGroupChatName] = useState();
     const [search, setSearch] = useState("");
     const [selectedUsers, setSelectedUsers] = useState([]);
+    // const [existingUsers, setExistingUsers] = useState([]);
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const { user, chats, setChats } = ChatState();
 
+    const { selectedChat, setSelectedChat } = ChatState();
+    // useEffect(() => {
+    //     if (isUpdateModal) {
+    //         let users = selectedChat.users.filter((member) => member._id != user._id);
+    //         console.log(users);
+    //         setSelectedUsers(users);
+    //     }
+    // }, [fetchAgain]);
 
     const handleSearch = async (event) => {
         const keyword = event.target.value;
@@ -41,8 +51,8 @@ const GroupModal = (props) => {
             const { data } = await axios.get(`/user?search=${keyword}`, config);
             setLoading(false);
             setSearchResult(data);
-            console.log(search);
-            console.log(searchResult);
+            // console.log(search);
+            // console.log(searchResult);
         } catch (error) {
             console.log(error);
             toast.error('Error in Search', {
@@ -114,14 +124,23 @@ const GroupModal = (props) => {
 
     };
 
-    const handleDelete = (user) => {
-        setSelectedUsers(selectedUsers.filter((obj) => obj._id !== user._id));
-    }
+    const addUsersToGroupChat = async (userObj) => {
+        if (selectedChat.users.find((u) => u._id === userObj._id)) {
+            toast.error('User already in group!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
 
-    const handleGroup = (user) => {
-        console.log(selectedUsers);
-        if (selectedUsers.includes(user)) {
-            toast.warn('User already added', {
+        }
+        if (selectedChat.groupAdmin._id !== user._id) {
+            toast.error('Only admins can add new user!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -133,7 +152,77 @@ const GroupModal = (props) => {
             });
             return;
         }
-        setSelectedUsers([...selectedUsers, user]);
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            }
+            const payload = {
+                chatId: selectedChat._id,
+                userIds: selectedUsers.map((user) => user._id),
+            }
+            console.log(payload);
+
+            const { data } = await axios.put(`/chat/group/add`, payload, config);
+            setSelectedChat(data);
+            setFetchAgain(!fetchAgain);
+            setLoading(false);
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Error in Creating chat', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }
+
+    const handleDelete = (user) => {
+        setSelectedUsers(selectedUsers.filter((obj) => obj._id !== user._id));
+    }
+
+    const checkUserInList = (list, user) => {
+
+        let exists = [];
+        exists = list.filter((obj) =>
+            obj._id === user._id
+        )
+        return exists.length === 1;
+    }
+
+    const handleGroup = (user) => {
+        // console.log("in handle group", user);
+        // console.log("in handle group", checkUserInList(selectedChat.users, user));
+
+        let alreadyPresent = isUpdateModal ?
+            (
+                checkUserInList(selectedUsers, user) || checkUserInList(selectedChat.users, user)
+            )
+            :
+            checkUserInList(selectedUsers, user)
+        if (alreadyPresent) {
+            toast.warn('User already added', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        } else {
+            setSelectedUsers([...selectedUsers, user]);
+        }
+
     }
 
     return (
@@ -158,7 +247,12 @@ const GroupModal = (props) => {
                                     {
                                         selectedChat.users.map((user) => {
                                             return (
-                                                <UserBadge key={user._id} name={user.name} closeController={() => handleDelete(user)} />
+                                                <UserBadge
+                                                    key={user._id}
+                                                    name={user.name}
+                                                    componentName={"UpdateGroup"}
+                                                    closeController={() => handleDelete(user)}
+                                                />
                                             )
 
                                         })
@@ -204,7 +298,14 @@ const GroupModal = (props) => {
                         </div>
                     </div>
                     <div className="groupModal__footer">
-                        <button onClick={createGroupChat}>Create Chat</button>
+                        <button onClick={isUpdateModal ? addUsersToGroupChat : createGroupChat}>
+                            {
+                                isUpdateModal ?
+                                    "Update Chat"
+                                    :
+                                    "Create Chat"
+                            }
+                        </button>
 
                     </div>
                 </div>

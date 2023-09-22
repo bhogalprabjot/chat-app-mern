@@ -124,8 +124,6 @@ const ChatPage = () => {
 
       <div className={selectedChat ? 'chatPage__left--hidden' : 'chatPage__left--container'}>
 
-
-
         {/* fixed top bar with hamburger icon and search box */}
         <div className='chatPage__nav--container'>
           {/* <OptionsDrawer /> */}
@@ -142,9 +140,6 @@ const ChatPage = () => {
           />
           {/* <button className='chatPage__nav--searchBox-button' onClick={handleSearch}>Go</button> */}
         </div>
-
-
-
 
         {/* Chat List component */}
         <ChatList loading={loading} setLoading={setLoading} searchResult={searchResult} setSearchResult={setSearchResult} fetchAgain={fetchAgain} />

@@ -36,3 +36,7 @@
     color: var(--color-subText);
 
 }
+
+.card__actions--add {
+    font-size: 1.8em;
+}

@@ -1,16 +1,16 @@
 const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
-
+const mongoose = require('mongoose')
 
 // fetchs existing specific chat or creates a new chat 
 const accessChat = async (req, res) => {
     // console.log("in chat controller");
-    // client will send the userId with which they wish to chat
+    // client will send the userId of the user they wish to chat with
     const { userId } = req.body;
 
     if (!userId) {
-        console.log("UserID not sent in request");
-        return res.status(400).json({ message: "UserID not sent in request" });
+        console.log("userId not sent in request");
+        return res.status(400).json({ message: "userId not sent in request" });
     }
 
     let isChat = await Chat.find({
@@ -28,10 +28,14 @@ const accessChat = async (req, res) => {
         select: "name profilePicture email",
     });
 
+    console.log("IN CHAT CONTROLLER", isChat);
 
+    // if chat exsits then send it back to the user
     if (isChat.length > 0) {
         res.send(isChat[0]);
-    } else {
+    }
+    // if this chat does not exsit then create new chat 
+    else {
         let chatData = {
             chatName: "sender",
             isGroupChat: false,
@@ -40,8 +44,8 @@ const accessChat = async (req, res) => {
 
         try {
             const createdChat = await Chat.create(chatData);
-            const FullChat = await Chat.findOne({ _id: createdChat._id }).populate("users", "-password");
-            res.status(200).send(FullChat);
+            const fullChat = await Chat.findOne({ _id: createdChat._id }).populate("users", "-password");
+            res.status(200).send(fullChat);
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
@@ -85,9 +89,10 @@ const createGroupChat = async (req, res) => {
     let users = JSON.parse(req.body.users);
 
     if (users.length < 2) {
-        return res.status(400).send("More than 2 users are required to form a group chat")
+        return res.status(400).send("Atleast 2 users are required to form a group chat")
     }
 
+    // add our current user (logged in user) to the list of users for group chat
     users.push(req.user);
 
     try {
@@ -111,6 +116,7 @@ const createGroupChat = async (req, res) => {
 
 }
 
+// rename the group chat
 const renameGroup = async (req, res) => {
     const { chatId, chatName } = req.body;
 
@@ -138,6 +144,7 @@ const renameGroup = async (req, res) => {
 
 }
 
+// remove a user from group chat
 const removeFromGroup = async (req, res) => {
     const { chatId, userId } = req.body;
 
@@ -163,10 +170,12 @@ const removeFromGroup = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
-const addToGroup = async (req, res) => {
-    const { chatId, userId } = req.body;
 
-    if (!chatId || !userId) {
+// add user/users to group chat
+const addToGroup = async (req, res) => {
+    const { chatId, userIds } = req.body;
+    console.log(chatId, userIds);
+    if (!chatId || !userIds) {
         return res.status(400).send({ message: "Please fill all the feilds" });
     }
 
@@ -174,7 +183,7 @@ const addToGroup = async (req, res) => {
         const updatedGroupChat = await Chat.findByIdAndUpdate(
             chatId,
             {
-                $push: { users: userId },
+                $push: { users: [...userIds] },
             },
             {
                 new: true

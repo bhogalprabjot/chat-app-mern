@@ -9,17 +9,19 @@
 .chatPage__left--hidden {
     width: 30%;
     height: 100%;
+    /* overflow-y: scroll; */
+
 }
 
 /* .chatPage__left--open{
-    
+    1
 } */
 
 .chatPage__left--container {
     width: 30%;
     height: 100%;
     /* background-color: rgb(235, 230, 230); */
-
+    /* overflow-y: scroll; */
     /* border-right: 2px solid black; */
 
 }
@@ -27,6 +29,7 @@
 .chatPage__right--hidden {
     width: 70%;
     height: 100%;
+    
 }
 
 /* .chatPage__right--open{

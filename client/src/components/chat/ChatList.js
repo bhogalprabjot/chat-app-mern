@@ -27,7 +27,6 @@ const ChatList = (props) => {
 
     fetchAllChats(userInfo)
 
-    console.log(chats);
 
   }, [history, fetchAgain])
 

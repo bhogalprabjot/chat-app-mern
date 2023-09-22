@@ -6,8 +6,8 @@ import { IoArrowBackSharp } from 'react-icons/io5';
 import DetailsDrawer from './DetailsDrawer';
 import { useState } from 'react';
 
-const ChatBox = () => {
-
+const ChatBox = (props) => {
+  const { fetchAgain, setFetchAgain } = props;
   const { selectedChat, setSelectedChat, user } = ChatState();
   const [showDrawer, setShowDrawer] = useState(false);
 
@@ -32,7 +32,7 @@ const ChatBox = () => {
           <div className='chatBox__container'>
             <div className='chatBox__header' >
               <div className='chatBox__backButton'>
-                <IoArrowBackSharp onClick={()=>{setSelectedChat(null)}}/>
+                <IoArrowBackSharp onClick={() => { setSelectedChat(null) }} />
               </div>
               {/* <div className='chatBox__userIcon'> */}
               <div className="chatBox__headerInfo" onClick={() => { setShowDrawer(true) }}>
@@ -73,6 +73,8 @@ const ChatBox = () => {
               chatDetails={chatDetails}
               showDrawer={showDrawer}
               setShowDrawer={setShowDrawer}
+              fetchAgain={fetchAgain}
+              setFetchAgain={setFetchAgain}
             />
 
           </div>

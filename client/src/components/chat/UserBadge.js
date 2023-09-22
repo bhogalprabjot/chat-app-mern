@@ -3,7 +3,7 @@ import "./UserBadge.css";
 
 const UserBadge = (props) => {
 
-    const {name, closeController} = props;
+    const { name, closeController, componentName } = props;
 
 
     return (
@@ -11,7 +11,10 @@ const UserBadge = (props) => {
             <div className="userBadge__title">
                 {name}
             </div>
-            <MdClose size={'1em'} cursor={'pointer'} onClick={closeController} />
+            {
+                !componentName &&
+                <MdClose size={'1em'} cursor={'pointer'} onClick={closeController} />
+            }
         </div>
     )
 }

@@ -21,6 +21,7 @@
 
     /* Disable horizontal scroll */
     overflow-x: hidden;
+    
 
 
     /* Place content 60px from the top */
@@ -135,7 +136,32 @@
     font-size: 1.8em;
 }
 
+.detailsDrawer__groupDetails-list{
+    /* overflow-y: scroll; */
+}
 
+.detailsDrawer__groupDetails-leave{
+    text-align: center;
+    margin: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.detailsDrawer__groupDetails-leave button{
+    font-size: 1.2em;
+}
+
+.detailsDrawer__loading {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-accentLight);
+    margin: 2%;
+}
+
+.ping {
+    -webkit-animation: ping 0.8s ease-in-out infinite both;
+    animation: ping 0.8s ease-in-out infinite both;
+}
 
 @media screen and (max-width: 950px) {
     .detailsDrawer--open {
@@ -146,5 +172,46 @@
 @media screen and (max-width: 500px) {
     .detailsDrawer--open {
         width: 100%;
+    }
+}
+
+
+@-webkit-keyframes ping {
+    0% {
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+        opacity: 0.8;
+    }
+
+    80% {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: scale(2.2);
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+@keyframes ping {
+    0% {
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+        opacity: 0.8;
+    }
+
+    80% {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: scale(2.2);
+        transform: scale(2.2);
+        opacity: 0;
     }
 }
