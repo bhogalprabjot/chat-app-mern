@@ -12,10 +12,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { ChatState } from "../../context/ChatProvider";
+import Loader from "../utils/Loader";
 
 
 const DetailsDrawer = (props) => {
-    const { user, chatDetails, selectedChat, showDrawer, setShowDrawer, fetchAgain, setFetchAgain } = props;
+    const { user, chatDetails, selectedChat, showDrawer, setShowDrawer, fetchAgain, setFetchAgain, fetchAllMessages } = props;
 
     const [groupNameEditable, setGroupNameEditable] = useState(false);
     const [openUpdateGroupModal, setOpenUpdateGroupModal] = useState(false);
@@ -107,6 +108,7 @@ const DetailsDrawer = (props) => {
 
 
             setFetchAgain(!fetchAgain);
+            fetchAllMessages();
             setLoading(false);
 
         } catch (error) {
@@ -216,7 +218,8 @@ const DetailsDrawer = (props) => {
 
                     {
                         loading ?
-                            <div className="detailsDrawer__loading ping">
+                            <div className="detailsDrawer__loader">
+                                <Loader />
                             </div> :
                             <div className="detailsDrawer__groupDetails-list">
                                 {

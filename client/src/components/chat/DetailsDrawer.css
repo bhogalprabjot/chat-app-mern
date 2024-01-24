@@ -21,7 +21,7 @@
 
     /* Disable horizontal scroll */
     overflow-x: hidden;
-    
+
 
 
     /* Place content 60px from the top */
@@ -106,17 +106,19 @@
     align-items: center;
     justify-content: center;
 }
-.detialsDrawer__edit-groupName>input{
+
+.detialsDrawer__edit-groupName>input {
     background-color: var(--color-backgroundLight);
     border: none;
     border-radius: 10px;
     padding: 2%;
-    
+
     font-size: 1.2em;
     color: var(--color-subtext);
     width: 50%;
 }
-.detialsDrawer__edit-buttons{
+
+.detialsDrawer__edit-buttons {
     font-size: 1.5em;
     margin-left: 2%;
 }
@@ -136,26 +138,26 @@
     font-size: 1.8em;
 }
 
-.detailsDrawer__groupDetails-list{
+.detailsDrawer__groupDetails-list {
     /* overflow-y: scroll; */
 }
 
-.detailsDrawer__groupDetails-leave{
+.detailsDrawer__groupDetails-leave {
     text-align: center;
     margin: 2%;
     padding-top: 2%;
     padding-bottom: 2%;
 }
-.detailsDrawer__groupDetails-leave button{
+
+.detailsDrawer__groupDetails-leave button {
     font-size: 1.2em;
 }
 
-.detailsDrawer__loading {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    background-color: var(--color-accentLight);
-    margin: 2%;
+.detailsDrawer__loader {
+    padding-left: 50%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+
 }
 
 .ping {

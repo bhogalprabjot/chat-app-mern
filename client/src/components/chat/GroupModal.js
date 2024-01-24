@@ -109,7 +109,7 @@ const GroupModal = (props) => {
             });
         } catch (error) {
             console.log(error);
-            toast.error('Error in Creating chat', {
+            toast.error(error.response.data, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

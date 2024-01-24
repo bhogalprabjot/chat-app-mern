@@ -14,10 +14,9 @@ import GroupModal from '../components/chat/GroupModal';
 
 const ChatPage = () => {
   // 4. Read that value within any component by using the context consumer.
-  const { user, setUser, selectedChat } = ChatState();
   const history = useHistory();
 
-
+  const { user, setUser, selectedChat } = ChatState();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState([]);
@@ -27,6 +26,7 @@ const ChatPage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
 
   const closeGroupModal = () => setShowGroupModal(false);
+
   const openGroupModal = () => {
     setShowGroupModal(true);
     setOptionsClass("optionsDrawer__container--close");
@@ -49,7 +49,6 @@ const ChatPage = () => {
   // }, [history])
 
   const handleSearch = async (event) => {
-
     if (event.key !== 'Enter')
       return;
 
