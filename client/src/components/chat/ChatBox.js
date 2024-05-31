@@ -9,72 +9,34 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Loader from '../utils/Loader';
 import ScrollableFeed from 'react-scrollable-feed';
+import io from 'socket.io-client';
+
+let socket, selectedChatCompare;
+const SERVER_BASE_URL = "http://localhost:5000";
 
 const ChatBox = (props) => {
   const { fetchAgain, setFetchAgain } = props;
-  const { selectedChat, setSelectedChat, user } = ChatState();
   const [showDrawer, setShowDrawer] = useState(false);
-
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState();
   const [isTyping, setIsTyping] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
 
-  const inputHandler = (e) => {
-    setNewMessage(e.target.value);
-  };
+  const { selectedChat, setSelectedChat, user } = ChatState();
 
-  const sendNewMessage = async (e) => {
-    if (e.key === "Enter" && newMessage) {
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        setNewMessage("");
-
-        const data = await axios.post(
-          '/message',
-          {
-            content: newMessage,
-            chatId: selectedChat._id,
-          },
-          config
-        );
-
-        console.log(data);
-
-        setMessages([...messages, data]);
-
-
-
-      } catch (error) {
-        console.log(error);
-        toast.error("Unable to send message", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-      }
-    }
-  };
 
   const fetchAllMessages = async (e) => {
+    if (!selectedChat) return;
+
     try {
-      setLoading(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      setNewMessage("");
+
+      setLoading(true);
 
       const { data } = await axios.get(
         `/message/${selectedChat._id}`,
@@ -82,12 +44,11 @@ const ChatBox = (props) => {
       );
 
       console.log("MESSAGES", data);
-
       setMessages(data);
-
       setLoading(false);
 
-
+      // console.log(socket)
+      // socket.emit('join chat', selectedChat._id);
     } catch (error) {
       console.log(error);
       toast.error("Unable to fetch message", {
@@ -104,13 +65,83 @@ const ChatBox = (props) => {
 
   };
 
+  const sendNewMessage = async (e) => {
+    if (e.key === "Enter" && newMessage) {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        setNewMessage("");
+
+        const { data } = await axios.post(
+          '/message',
+          {
+            content: newMessage,
+            chatId: selectedChat,
+          },
+          config
+        );
+
+        console.log(data);
+        socket.emit('new message', data);
+        setMessages([...messages, data]);
+
+      } catch (error) {
+        console.log(error);
+        toast.error("Unable to send message", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      }
+    }
+  };
   useEffect(() => {
-    selectedChat &&
-      fetchAllMessages()
+    fetchAllMessages();
+
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
 
-  console.log(selectedChat);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    socket = io(SERVER_BASE_URL);
+    console.log('io connection', userInfo);
+    socket.emit("setup", userInfo);
+    socket.on("connected", () => setSocketConnected(true));
+  }, [])
+
+
+
+
+  useEffect(() => {
+    console.log("this is message recieved");
+
+    socket.on('message recieved', (newMessageRecieved) => {
+      console.log("this is message recieved", newMessageRecieved);
+
+      if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
+        //notification
+      }
+      else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    })
+  })
+
+  const inputHandler = (e) => {
+    setNewMessage(e.target.value);
+  };
+
 
   const chatDetails = selectedChat ?
     !selectedChat?.isGroupChat ?
@@ -178,7 +209,7 @@ const ChatBox = (props) => {
 
                         messages && messages.map((msg, idx) => (
                           // <div className={isSameSenderMargin(messages, msg, idx, user._id) ? 'chatBox__message-outer-container--right' : 'chatBox__message-outer-container'}>
-                          <div className={(msg?.sender?._id === user._id) ? 'chatBox__message-outer-container--right' : 'chatBox__message-outer-container'}>
+                          <div key={msg._id} className={(msg?.sender?._id === user._id) ? 'chatBox__message-outer-container--right' : 'chatBox__message-outer-container'}>
                             {
                               (isSameSender(messages, msg, idx, user._id) || isLastMessage(messages, idx, user._id))
                               &&

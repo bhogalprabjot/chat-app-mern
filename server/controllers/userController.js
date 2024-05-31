@@ -79,9 +79,9 @@ const getAllUsers = async (req, res) => {
 
         ],
     } : {};
-    console.log(keyword['$or'][0]);
+    // console.log(keyword['$or'][0]);
     const users = await User.find(keyword).find({ _id: { $ne: req.user._id } }).select(["-password"]);
-    console.log(users);
+    // console.log(users);
 
     // .where({ _id: { $ne: req.user._id } });
     res.send(users);

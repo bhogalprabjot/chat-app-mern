@@ -28,7 +28,7 @@ const accessChat = async (req, res) => {
         select: "name profilePicture email",
     });
 
-    console.log("IN CHAT CONTROLLER", isChat);
+    // console.log("IN CHAT CONTROLLER", isChat);
 
     // if chat exsits then send it back to the user
     if (isChat.length > 0) {
@@ -174,7 +174,7 @@ const removeFromGroup = async (req, res) => {
 // add user/users to group chat
 const addToGroup = async (req, res) => {
     const { chatId, userIds } = req.body;
-    console.log(chatId, userIds);
+    // console.log(chatId, userIds);
     if (!chatId || !userIds) {
         return res.status(400).send({ message: "Please fill all the feilds" });
     }

@@ -46,11 +46,11 @@ const getAllMessages = async (req, res) => {
 
     const { chatId } = req.params;
 
-    console.log(chatId);
+    // console.log(chatId);
     try {
         const messages = await Message.find({ chat: chatId }).populate("sender", "name email profilePicture").populate("chat");
 
-        console.log(messages);
+        // console.log(messages);
 
         res.status(200).send(messages);
 
