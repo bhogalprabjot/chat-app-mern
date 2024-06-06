@@ -48,7 +48,7 @@ const GroupModal = (props) => {
                     Authorization: `Bearer ${user.token}`,
                 },
             }
-            const { data } = await axios.get(`/user?search=${keyword}`, config);
+            const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user?search=${keyword}`, config);
             setLoading(false);
             setSearchResult(data);
             // console.log(search);
@@ -94,7 +94,7 @@ const GroupModal = (props) => {
                 name: groupChatName,
                 users: JSON.stringify(selectedUsers.map((user) => user._id))
             }
-            const { data } = await axios.post(`/chat/group`, payload, config);
+            const { data } = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/chat/group`, payload, config);
             setChats([data, ...chats]);
             setShowGroupModal(false);
             toast.success('New group created!', {
@@ -164,7 +164,7 @@ const GroupModal = (props) => {
             }
             console.log(payload);
 
-            const { data } = await axios.put(`/chat/group/add`, payload, config);
+            const { data } = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/chat/group/add`, payload, config);
             setSelectedChat(data);
             setFetchAgain(!fetchAgain);
             setLoading(false);

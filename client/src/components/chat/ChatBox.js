@@ -39,7 +39,7 @@ const ChatBox = (props) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `/message/${selectedChat._id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/message/${selectedChat._id}`,
         config
       );
 
@@ -77,7 +77,7 @@ const ChatBox = (props) => {
         setNewMessage("");
 
         const { data } = await axios.post(
-          '/message',
+          `${process.env.REACT_APP_API_BASE_URL}/message`,
           {
             content: newMessage,
             chatId: selectedChat,
@@ -113,7 +113,7 @@ const ChatBox = (props) => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    socket = io(SERVER_BASE_URL);
+    socket = io(process.env.REACT_APP_API_BASE_URL);
     console.log('io connection', userInfo);
     socket.emit("setup", userInfo);
     socket.on("connected", () => setSocketConnected(true));

@@ -49,7 +49,7 @@ const ChatList = (props) => {
           },
         }
 
-        const { data } = await axios.get("/chat", config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/chat`, config);
         console.log(data);
         if (data !== null && data.length === 0) {
           data.push("Create new chat");
@@ -81,7 +81,7 @@ const ChatList = (props) => {
           Authorization: `Bearer ${user?.token}`,
         },
       }
-      const { data } = await axios.post('/chat', { userId }, config);
+      const { data } = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/chat`, { userId }, config);
       if (!chats.find((chat) => chat._id === data._id))
         setChats([data, ...chats]);
       setSelectedChat(data);
