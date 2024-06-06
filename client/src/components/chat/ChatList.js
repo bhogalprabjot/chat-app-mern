@@ -12,45 +12,18 @@ import { getSender } from '../../config/ChatLogic';
 const ChatList = (props) => {
   const { loading, setLoading, searchResult, setSearchResult, fetchAgain } = props;
   const [chatloading, setChatLoading] = useState(true);
-  const { user, setUser, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const { user, setUser, selectedChat, setSelectedChat, chats, setChats, notification } = ChatState();
   const history = useHistory();
 
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
-    // console.log("ChatList", userInfo);
-    if (!userInfo) {
-      history.push("/");
-    }
+    fetchAllChats()
+    // console.log('notifications======.......', notification);
+  }, [user, fetchAgain])
 
-
-    fetchAllChats(userInfo)
-
-
-  }, [history, fetchAgain])
-
-  const fetchAllChats = async (user) => {
-    // console.log("fetchAllChats", user);
-    setChatLoading(true);
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-
-      const userId = user._id;
-      const { data } = await axios.get("/chat", config);
-      console.log(data);
-      if (data !== null && data.length === 0) {
-        data.push("Create new chat");
-      }
-      setChats(data)
-      setChatLoading(false)
-    } catch (error) {
-      console.log(error);
-      toast.error("Unable to fetch Chats", {
+  useEffect(() => {
+    if (notification.length !== 0) {
+      toast.info(`${notification[0].sender.name}: ${notification[0].content}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -59,7 +32,43 @@ const ChatList = (props) => {
         draggable: true,
         progress: undefined,
         theme: "light",
+        onClick: () => accessChat(notification[0].sender._id)
       })
+    }
+  }, [notification])
+
+  const fetchAllChats = async () => {
+    console.log("fetchAllChats", user);
+    if (user) {
+
+      // setChatLoading(true);
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+
+        const { data } = await axios.get("/chat", config);
+        console.log(data);
+        if (data !== null && data.length === 0) {
+          data.push("Create new chat");
+        }
+        setChats(data)
+        // setChatLoading(false)
+      } catch (error) {
+        console.log(error);
+        toast.error("Unable to fetch Chats", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      }
     }
   }
 
@@ -69,14 +78,14 @@ const ChatList = (props) => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       }
       const { data } = await axios.post('/chat', { userId }, config);
       if (!chats.find((chat) => chat._id === data._id))
         setChats([data, ...chats]);
       setSelectedChat(data);
-      setChatLoading(false);
+      // setChatLoading(false);
       setSearchResult(null);
 
 
@@ -102,7 +111,7 @@ const ChatList = (props) => {
   return (
     <div className='chatList__container'>
       {
-        loading || chatloading ?
+        loading ?
           <div className='chatList__loader--container'>
             <Loader />
           </div>

@@ -10,12 +10,12 @@ const HomePage = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const closeSignUpModal = () => setShowSignUpModal(false);
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("userInfo"));
-  //   // console.log("HomePage: ", user);
-  //   if (user) history.push("/chats");
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    // console.log("HomePage: ", user);
+    if (user) history.push("/chats");
 
-  // }, [history])
+  }, [history])
 
   return (
     <>

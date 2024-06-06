@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { ChatState } from '../../context/ChatProvider';
 
 
 const SignUp = (props) => {
@@ -23,6 +24,7 @@ const SignUp = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const { setUser } = ChatState();
 
 
   const uploadProfilePicture = (pic) => {
@@ -147,7 +149,7 @@ const SignUp = (props) => {
         progress: undefined,
         theme: "light",
       })
-
+      setUser(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
 
       setLoading(false);

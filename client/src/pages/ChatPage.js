@@ -16,7 +16,7 @@ const ChatPage = () => {
   // 4. Read that value within any component by using the context consumer.
   const history = useHistory();
 
-  const { user, setUser, selectedChat } = ChatState();
+  const { user, setUser,selectedChat } = ChatState();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState([]);

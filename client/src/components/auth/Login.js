@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { ChatState } from '../../context/ChatProvider';
 
 const Login = (props) => {
     const showModal = () => props.setShowSignUpModal(true);
@@ -15,7 +16,7 @@ const Login = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-
+    const {setUser} = ChatState();
 
     const handleChange = (event) => {
         switch (event.target.name) {
@@ -63,7 +64,7 @@ const Login = (props) => {
                 progress: undefined,
                 theme: "light",
             })
-
+            setUser(data);
             localStorage.setItem("userInfo", JSON.stringify(data));
 
             setLoading(false);

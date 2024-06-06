@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 import Loader from '../utils/Loader';
 import ScrollableFeed from 'react-scrollable-feed';
 import io from 'socket.io-client';
-
 let socket, selectedChatCompare;
 const SERVER_BASE_URL = "http://localhost:5000";
 
@@ -19,12 +18,13 @@ const ChatBox = (props) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState();
-  const [isTyping, setIsTyping] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { selectedChat, setSelectedChat, user, notification, setNotification } = ChatState();
+
+
   const [socketConnected, setSocketConnected] = useState(false);
-
-  const { selectedChat, setSelectedChat, user } = ChatState();
-
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   const fetchAllMessages = async (e) => {
     if (!selectedChat) return;
@@ -48,7 +48,7 @@ const ChatBox = (props) => {
       setLoading(false);
 
       // console.log(socket)
-      // socket.emit('join chat', selectedChat._id);
+      socket.emit('join chat', selectedChat._id);
     } catch (error) {
       console.log(error);
       toast.error("Unable to fetch message", {
@@ -106,7 +106,6 @@ const ChatBox = (props) => {
   };
   useEffect(() => {
     fetchAllMessages();
-
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
@@ -118,6 +117,9 @@ const ChatBox = (props) => {
     console.log('io connection', userInfo);
     socket.emit("setup", userInfo);
     socket.on("connected", () => setSocketConnected(true));
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop typing", () => setIsTyping(false));
+
   }, [])
 
 
@@ -130,7 +132,10 @@ const ChatBox = (props) => {
       console.log("this is message recieved", newMessageRecieved);
 
       if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
-        //notification
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchAgain(!fetchAgain)
+        }
       }
       else {
         setMessages([...messages, newMessageRecieved]);
@@ -140,6 +145,26 @@ const ChatBox = (props) => {
 
   const inputHandler = (e) => {
     setNewMessage(e.target.value);
+    if (!socketConnected)
+      return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    let timerLength = 3000;
+
+    setTimeout(() => {
+      let timeNow = new Date().getTime();
+      let timeDiff = timeNow - lastTypingTime;
+
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
+
   };
 
 
@@ -187,9 +212,9 @@ const ChatBox = (props) => {
                   <div className='chatBox__onlineStatus'>
                     {
                       !selectedChat?.isGroupChat ?
-                        "online"
+                        isTyping ? "typing..." : "online"
                         :
-                        `${selectedChat.users?.length} Members`
+                        isTyping ? "typing..." : `${selectedChat.users?.length} Members`
                     }
                   </div>
                 </div>

@@ -47,14 +47,20 @@ io.on("connection", (socket) => {
 
     socket.on('setup', (userData) => {
         socket.join(userData?._id);
-        console.log(`User ${userData?.name} ${userData._id} connected`);
+        console.log(`User ${userData?.name} ${userData?._id} connected`);
         socket.emit("connected");
     })
 
-    // socket.on('join chat', (room) => {
-    //     socket.join(room);
-    //     console.log(`User joined room: ${room}`);
-    // })
+    socket.on('join chat', (room) => {
+        socket.join(room);
+        console.log(`User joined room: ${room}`);
+    })
+
+    socket.on('typing', (room) =>{console.log(
+    "tyyping in room ", room
+    ); socket.in(room).emit("typing")});
+    socket.on('stop typing', (room) => socket.in(room).emit("stop typing"));
+
 
     socket.on('new message', (newMessageRecieved) => {
         let chat = newMessageRecieved.chat;
