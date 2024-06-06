@@ -113,7 +113,7 @@ const ChatBox = (props) => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    socket = io(process.env.REACT_APP_API_BASE_URL);
+    socket = io(process.env.REACT_APP_SOCKET_BASE_URL);
     console.log('io connection', userInfo);
     socket.emit("setup", userInfo);
     socket.on("connected", () => setSocketConnected(true));

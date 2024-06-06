@@ -4,14 +4,25 @@ const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require('./routes/messageRoutes');
+const cors = require('cors');
 
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const { Server } = require("socket.io");
 const { createServer } = require("http");
 
-
 const app = express();
+
+const options = [
+    cors({
+        origin: '*',
+        methods: '*',
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+    })
+];
+app.use(options);
+
 dotenv.config();
 connectDB();
 
@@ -36,9 +47,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
     pingTimeout: 60000,
-    cors: {
-        origin: true,
-    }
+    cors: options.cors
 });
 
 io.on("connection", (socket) => {
@@ -56,9 +65,11 @@ io.on("connection", (socket) => {
         console.log(`User joined room: ${room}`);
     })
 
-    socket.on('typing', (room) =>{console.log(
-    "tyyping in room ", room
-    ); socket.in(room).emit("typing")});
+    socket.on('typing', (room) => {
+        console.log(
+            "tyyping in room ", room
+        ); socket.in(room).emit("typing")
+    });
     socket.on('stop typing', (room) => socket.in(room).emit("stop typing"));
 
 
