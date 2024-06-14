@@ -10,6 +10,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const { Server } = require("socket.io");
 const { createServer } = require("http");
+const path = require("path");
 
 const app = express();
 
@@ -28,13 +29,31 @@ connectDB();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Hello world this is chat app")
-});
+// app.get("/", (req, res) => {
+//     res.send("Hello world this is chat app")
+// });
 
 app.use("/user", userRoutes);
 app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
+
+// --------------------------deployment------------------------------
+
+const __dirname1 = path.resolve();
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname1, "/client/build")));
+
+    app.get("*", (req, res) =>
+        res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+    );
+} else {
+    app.get("/", (req, res) => {
+        res.send("API is running..");
+    });
+}
+
+// --------------------------deployment------------------------------
 
 app.use(notFound);
 app.use(errorHandler);
@@ -47,7 +66,10 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
     pingTimeout: 60000,
-    cors: options.cors
+    cors: {
+        origin: "http://localhost:3000",
+        // credentials: true,
+    },
 });
 
 io.on("connection", (socket) => {
