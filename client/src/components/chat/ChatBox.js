@@ -11,7 +11,7 @@ import Loader from '../utils/Loader';
 import ScrollableFeed from 'react-scrollable-feed';
 import io from 'socket.io-client';
 let socket, selectedChatCompare;
-const SERVER_BASE_URL = "http://localhost:5000";
+const SERVER_BASE_URL = "https://connect-m06b.onrender.com";
 
 const ChatBox = (props) => {
   const { fetchAgain, setFetchAgain } = props;
