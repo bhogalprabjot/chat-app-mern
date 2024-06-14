@@ -44,7 +44,7 @@ const DetailsDrawer = (props) => {
                 chatId: selectedChat._id,
                 chatName: groupName,
             }
-            const { data } = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/chat/group`, payload, config);
+            const { data } = await axios.put(`/chat/group`, payload, config);
             setSelectedChat(data);
             setFetchAgain(!fetchAgain);
             toast.success('Group name updated!', {
@@ -102,7 +102,7 @@ const DetailsDrawer = (props) => {
             }
             // console.log(payload);
 
-            const { data } = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/chat/group/remove`, payload, config);
+            const { data } = await axios.put(`/chat/group/remove`, payload, config);
 
             userObj._id === user._id ? setSelectedChat() : setSelectedChat(data);
 

@@ -39,7 +39,7 @@ const ChatBox = (props) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/message/${selectedChat._id}`,
+        `/message/${selectedChat._id}`,
         config
       );
 
@@ -77,7 +77,7 @@ const ChatBox = (props) => {
         setNewMessage("");
 
         const { data } = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/message`,
+          `/message`,
           {
             content: newMessage,
             chatId: selectedChat,

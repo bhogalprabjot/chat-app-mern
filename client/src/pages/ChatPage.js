@@ -77,7 +77,7 @@ const ChatPage = () => {
         },
       }
 
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user?search=${search}`, config);
+      const { data } = await axios.get(`/user?search=${search}`, config);
       setLoading(false);
       console.log(data);
 
