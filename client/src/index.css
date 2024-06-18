@@ -1,20 +1,27 @@
 * {
   margin: 0;
-  --color-background: #000000;
+  /* --color-background: #000000;
   --color-backgroundLight: rgb(24,23,29);
   --color-messageBackground: rgb(54, 52, 61);
   --color-text: #ebe3e3;
   --color-subText: rgb(109,108,113);
   --color-primaryDark: #150050;
   --color-accent: #3F0071;
-  --color-accentLight: #610094;
-
-} 
+  --color-accentLight: #610094; */
+  --color-background: #090612;
+  --color-backgroundLight: #20153c;
+  --color-messageBackground: #362367;
+  --color-text: rgb(228, 228, 229);
+  --color-subText: rgb(43, 35, 35);
+  --color-primaryDark: #362367;
+  --color-accent:#6340bc;
+  --color-accentLight: #794ee6;
+}
 
 body {
   background-color: var(--color-background);
-  color: rgb(228,228,229);
-  font-family: 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  color: rgb(228, 228, 229);
+    font-family: 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -2,7 +2,7 @@ import { getSender, isLastMessage, isLoggedInUser, isSameSender, isSameSenderMar
 import { ChatState } from '../../context/ChatProvider';
 import './ChatBox.css';
 
-import { IoArrowBackSharp } from 'react-icons/io5';
+import { IoArrowBackSharp, IoSendSharp } from 'react-icons/io5';
 import DetailsDrawer from './DetailsDrawer';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import ScrollableFeed from 'react-scrollable-feed';
 import io from 'socket.io-client';
 let socket, selectedChatCompare;
 const SERVER_BASE_URL = "https://connect-m06b.onrender.com";
+// const SERVER_BASE_URL = "http://localhost:5000";
 
 const ChatBox = (props) => {
   const { fetchAgain, setFetchAgain } = props;
@@ -66,7 +67,8 @@ const ChatBox = (props) => {
   };
 
   const sendNewMessage = async (e) => {
-    if (e.key === "Enter" && newMessage) {
+    console.log(e);
+    if ((e.key === "Enter" || e.type === 'click') && newMessage) {
       try {
         const config = {
           headers: {
@@ -263,6 +265,7 @@ const ChatBox = (props) => {
                   placeholder='Write a message...'
                 >
                 </input>
+                <IoSendSharp className='chatBox__chat-send' onClick={sendNewMessage} />
               </div>
             </div>
             <DetailsDrawer
