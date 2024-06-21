@@ -285,7 +285,7 @@ const GroupModal = (props) => {
                                                 key={user._id}
                                                 isUserCard={true}
                                                 title={user.name}
-                                                subtitle={user.email}
+                                                subTitle={user.email}
                                                 profilePicture={user.profilePicture}
                                                 obj={user}
                                                 clickController={() => handleGroup(user)}

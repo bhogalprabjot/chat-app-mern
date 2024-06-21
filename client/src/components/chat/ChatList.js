@@ -23,17 +23,19 @@ const ChatList = (props) => {
 
   useEffect(() => {
     if (notification.length !== 0) {
-      toast.info(`${notification[0].sender.name}: ${notification[0].content}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        onClick: () => accessChat(notification[0].sender._id)
-      })
+      fetchAllChats();
+      if (!selectedChat || selectedChat._id !== notification[notification.length - 1].chat._id)
+        toast.info(`${notification[0].sender.name}: ${notification[0].content}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClick: () => accessChat(notification[0].sender._id)
+        })
     }
   }, [notification])
 
@@ -132,7 +134,7 @@ const ChatList = (props) => {
                           <Card
                             key={_id}
                             title={name}
-                            subtitle={email}
+                            subTitle={email}
                             profilePicture={profilePicture}
                             clickController={() => accessChat(_id)}
                           />
@@ -163,6 +165,8 @@ const ChatList = (props) => {
                             key={chat._id}
                             title={sender.name}
                             profilePicture={sender.profilePicture}
+                            chat={chat}
+                            subTitle={null}
                             clickController={() => selectChat(chat)}
                             isSelected={selectedChat === chat}
                           />

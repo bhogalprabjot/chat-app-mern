@@ -7,8 +7,9 @@ const Card = (props) => {
     const {
         id,
         title,
-        subtitle,
+        subTitle,
         profilePicture,
+        chat,
         clickController,
         userObj,
         isSelected,
@@ -18,7 +19,21 @@ const Card = (props) => {
 
     const { user } = ChatState();
 
-    console.log(id, user._id);
+
+    const prepareSubtitle = () => {
+        const { isGroupChat, latestMessage } = chat;
+        let subTitle = '';
+        if (latestMessage) {
+            if (latestMessage?.sender?._id === user?._id)
+                subTitle = `You: ${latestMessage?.content}`;
+            else if (isGroupChat)
+                subTitle = `${latestMessage?.sender?.name}: ${latestMessage?.content}`;
+            else
+                subTitle = `${latestMessage?.content}`;
+        }
+
+        return subTitle;
+    }
 
     // const containerClass = selectedChat === obj ? "card__container--selected" : "card__container";
     const containerClass = isSelected ? "card__container--selected" : "card__container";
@@ -30,7 +45,7 @@ const Card = (props) => {
                     {title}
                 </div>
                 <div className="card__subtitle">
-                    {subtitle}
+                    {chat ? prepareSubtitle() : subTitle && subTitle}
                 </div>
             </div>
             {
@@ -38,7 +53,7 @@ const Card = (props) => {
 
                     <BsPersonDashFill
                         className="card__actions--add"
-                        onClick={()=> actionController(userObj)}
+                        onClick={() => actionController(userObj)}
                     />
 
                     :

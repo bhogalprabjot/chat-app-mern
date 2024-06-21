@@ -131,17 +131,14 @@ const ChatBox = (props) => {
     console.log("this is message recieved");
 
     socket.on('message recieved', (newMessageRecieved) => {
-      console.log("this is message recieved", newMessageRecieved);
 
-      if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
-        if (!notification.includes(newMessageRecieved)) {
-          setNotification([newMessageRecieved, ...notification]);
-          setFetchAgain(!fetchAgain)
-        }
+      if (!notification.includes(newMessageRecieved)) {
+        setNotification([newMessageRecieved, ...notification]);
+        setFetchAgain(!fetchAgain)
       }
-      else {
+      if (selectedChatCompare && selectedChatCompare._id === newMessageRecieved.chat._id)
         setMessages([...messages, newMessageRecieved]);
-      }
+
     })
   })
 

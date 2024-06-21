@@ -231,7 +231,7 @@ const DetailsDrawer = (props) => {
                                                 id={user._id}
                                                 isUserCard={true}
                                                 title={user.name}
-                                                subtitle={user.email}
+                                                subTitle={user.email}
                                                 profilePicture={user.profilePicture}
                                                 userObj={user}
                                                 componentName={"DetailsDrawer"}

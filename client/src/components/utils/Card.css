@@ -32,8 +32,14 @@
     margin-left: 2%;
 
 }
+.card__title{
+    font-weight: bold;
+}
 .card__subtitle{
-    color: var(--color-subText);
+    font-weight: 100;
+}
+.card__subtitle--unread{
+    font-weight: 700;
 
 }
 
